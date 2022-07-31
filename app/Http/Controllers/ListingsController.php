@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Listings;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use PhpParser\Node\Expr\List_;
 
 class ListingsController extends Controller
 {
@@ -29,17 +30,40 @@ class ListingsController extends Controller
             'company' => ['required', Rule::unique('listings', 'company')],
             'title' => 'required',
             'location' => 'required',
-            'tags' => 'required',
             'email' => ['required', 'email'],
             'website' => 'required',
+            'tags' => 'required',
             'description' => 'required'
         ]);
 
         if($request->hasFile('logo')) {
-            $formFields = $request->file('logo')->store('logos', 'public');
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
 
         }
         Listings::create($formFields);
         return redirect('/')->with('message', 'Listing Successfully created');
+    }
+
+    public function edit(Listings $listing) {
+        return view('listings.edit', ['listing' => $listing]);
+    }
+
+    public function update(Request $request, Listings $listing) {
+        $formFields = $request->validate([
+            'company' => 'required',
+            'title' => 'required',
+            'location' => 'required',
+            'email' => ['required', 'email'],
+            'website' => 'required',
+            'tags' => 'required',
+            'description' => 'required'
+        ]);
+
+        if($request->hasFile('logo')) {
+            $formFields['logo'] = $request->file('logo')->store('logos', 'public');
+
+        }
+        $listing->update($formFields);
+        return redirect('/')->with('message', 'Listing Successfully Updated');
     }
 }

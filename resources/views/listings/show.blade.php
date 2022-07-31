@@ -5,10 +5,12 @@
     <div class="mx-4">
         <x-card class="p-10">
             <div class="flex flex-col items-center justify-center text-center">
-                <img class="w-48 mr-6 mb-6" src="{{ asset('images/no-image.png') }}" alt="" />
+                <img class="w-48 mr-6 mb-6"
+                    src="{{ $listing->logo ? asset('storage/' . $listing->logo) : asset('images/no-image.png') }}"
+                    alt="" />
                 <h3 class="text-2xl mb-2">{{ $listing->title }}</h3>
                 <div class="text-xl font-bold mb-4">{{ $listing->company }}</div>
-                    <x-listing-tags :tagsL="$listing->tags" />
+                <x-listing-tags :tagsL="$listing->tags" />
                 <div class="text-lg my-4">
                     <i class="fa-solid fa-location-dot"></i> {{ $listing->location }}
                 </div>
@@ -34,6 +36,10 @@
                     </div>
                 </div>
             </div>
+        </x-card>
+        <x-card class="mt-4 p-4 flex space-x-6">
+            <a href="/listins/{{ $listing->id }}/edit">
+                <i class="fa-solid fa-pencil"></i> Edit</a>
         </x-card>
     </div>
 
