@@ -27,5 +27,12 @@ class UsersController extends Controller
         return redirect('/')->with('message', 'User Created And Logged In');
     }
 
-    
+    public function logout(Request $request) {
+        auth()->logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/')->with('message', 'User Logged Out');
+    }
 }
