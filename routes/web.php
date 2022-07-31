@@ -33,6 +33,10 @@ Route::get('/listings/{listing}', [ListingsController::class, 'show']);
 
 Route::get('/register', [UsersController::class, 'register']);
 
+Route::post('users/logout', [UsersController::class, 'logout']);
+
 Route::post('/users', [UsersController::class, 'store']);
 
-Route::post('users/logout', [UsersController::class, 'logout']);
+Route::get('/login', [UsersController::class, 'login']);
+
+Route::post('/users/authenticate', [UsersController::class, 'authenticate']);
